@@ -1,6 +1,8 @@
 # Ignore all by default
 *
 
+!*/
+
 ## Allowlist
 !.gitignore
 !./immich/docker-compose.yml
