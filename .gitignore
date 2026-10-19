@@ -3,4 +3,4 @@
 
 ## Allowlist
 !.gitignore
-!immich/docker-compose.yaml
+!immich/docker-compose.yml
