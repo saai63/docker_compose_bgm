@@ -3,6 +3,7 @@
   "extends": [
     "config:recommended"
   ],
+  "dependencyDashboard": true,
   "timezone": "Europe/Berlin",
   "schedule": [
     "at 6:06pm every day"
