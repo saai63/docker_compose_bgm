@@ -6,3 +6,4 @@
 ## Allowlist
 !.gitignore
 !immich/docker-compose.yml
+!renovate.json
