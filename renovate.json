@@ -11,16 +11,16 @@
     "* 20 * * *"
   ],
   "docker-compose": {
-    "fileMatch": [
-      "(^|/)docker-compose[^/]*\\.ya?ml$"
+    "managerFilePatterns": [
+      "/(^|/)docker-compose[^/]*\\.ya?ml$/"
     ]
   },
   "packageRules": [
     {
-      "matchPackagePatterns": [
-        "^ghcr\\.io/immich-app/"
-      ],
-      "groupName": "Immich Core Suite"
+      "groupName": "Immich Core Suite",
+      "matchPackageNames": [
+        "/^ghcr\\.io/immich-app//"
+      ]
     }
   ]
 }
