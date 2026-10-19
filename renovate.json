@@ -6,7 +6,7 @@
   "dependencyDashboard": true,
   "timezone": "Europe/Berlin",
   "schedule": [
-    "at 6:20pm every day"
+    "every day technique: at 6:20pm"
   ],
   "docker-compose": {
     "fileMatch": [
