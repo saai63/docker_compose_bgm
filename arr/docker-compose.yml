@@ -1,0 +1,205 @@
+services:       
+
+#  ██████╗ ██╗     ██╗   ██╗███████╗████████╗██╗   ██╗███╗   ██╗
+# ██╔════╝ ██║     ██║   ██║██╔════╝╚══██╔══╝██║   ██║████╗  ██║
+# ██║  ███╗██║     ██║   ██║█████╗     ██║   ██║   ██║██╔██╗ ██║
+# ██║   ██║██║     ██║   ██║██╔══╝     ██║   ██║   ██║██║╚██╗██║
+# ╚██████╔╝███████╗╚██████╔╝███████╗   ██║   ╚██████╔╝██║ ╚████║
+#  ╚═════╝ ╚══════╝ ╚═════╝ ╚══════╝   ╚═╝    ╚═════╝ ╚═╝  ╚═══╝
+
+  gluetun:
+    image: qmcgaw/gluetun
+    ports:
+      - "8002:8000"
+      - "9696:9696"      # Prowlarr
+      - "8989:8989"      # Sonarr
+      - "7878:7878"      # Radarr
+      - "6970:6969"      # Whisparr
+      - "8191:8191"      # FlareSolver
+      - "8686:8686"      # Lidarr
+      - "6767:6767"      # Bazarr
+      - "8080:8080"      # qBitTorrent
+      - "6881:6881"      # qBitTorrent
+      - "6881:6881/udp"  # qBitTorrent
+    cap_add:
+      - NET_ADMIN
+    privileged: true
+    restart: unless-stopped
+    volumes:
+      - ./gluetun_config:/gluetun/auth
+    environment:
+      - VPN_SERVICE_PROVIDER=${VPN_SERVICE_PROVIDER}
+      - VPN_TYPE=${VPN_TYPE}
+      - WIREGUARD_ENDPOINT_IP=${WIREGUARD_ENDPOINT_IP}
+      - WIREGUARD_ENDPOINT_PORT=${WIREGUARD_ENDPOINT_PORT}
+      - WIREGUARD_PUBLIC_KEY=${WIREGUARD_PUBLIC_KEY}
+      - WIREGUARD_PRIVATE_KEY=${WIREGUARD_PRIVATE_KEY}
+      - WIREGUARD_PRESHARED_KEY=${WIREGUARD_PRESHARED_KEY}
+      - WIREGUARD_ADDRESSES=${WIREGUARD_ADDRESSES}
+      - VPN_PORT_FORWARDING=${VPN_PORT_FORWARDING}
+      - VPN_PORT_FORWARDING_PROVIDER=${VPN_PORT_FORWARDING_PROVIDER}
+                 
+
+# ██████╗ ██████╗  ██████╗ ██╗    ██╗██╗      █████╗ ██████╗ ██████╗ 
+# ██╔══██╗██╔══██╗██╔═══██╗██║    ██║██║     ██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝██████╔╝██║   ██║██║ █╗ ██║██║     ███████║██████╔╝██████╔╝
+# ██╔═══╝ ██╔══██╗██║   ██║██║███╗██║██║     ██╔══██║██╔══██╗██╔══██╗
+# ██║     ██║  ██║╚██████╔╝╚███╔███╔╝███████╗██║  ██║██║  ██║██║  ██║
+# ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
+                              
+  prowlarr:
+    image: linuxserver/prowlarr:2.6.5.5623-ls164
+    container_name: prowlarr
+    volumes:
+      - ${ARRPATH}/Prowlarr/config:/config
+      - ${ARRPATH}/Prowlarr/backup:/data/Backup
+      - ${ARRPATH}/Downloads:/downloads
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    environment:
+      - PROWLARR_IGNORE_SSL_ERRORS=true
+    env_file:
+      - '.env'
+      
+# ███████╗ ██████╗ ███╗   ██╗ █████╗ ██████╗ ██████╗ 
+# ██╔════╝██╔═══██╗████╗  ██║██╔══██╗██╔══██╗██╔══██╗
+# ███████╗██║   ██║██╔██╗ ██║███████║██████╔╝██████╔╝
+# ╚════██║██║   ██║██║╚██╗██║██╔══██║██╔══██╗██╔══██╗
+# ███████║╚██████╔╝██║ ╚████║██║  ██║██║  ██║██║  ██║
+# ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                                 
+      
+  sonarr:
+    image: linuxserver/sonarr:4.0.20.3014-ls329
+    container_name: sonarr
+    volumes:
+      - ${ARRPATH}/Sonarr/config:/config
+      - ${ARRPATH}/Sonarr/backup:/data/Backup
+      - ${ARRPATH}/Sonarr/tvshows:/data/tvshows
+      - ${ARRPATH}/Downloads:/downloads
+      - ./scripts:/custom_scripts 
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    env_file:
+      - '.env'
+      
+# ██████╗  █████╗ ██████╗  █████╗ ██████╗ ██████╗ 
+# ██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝███████║██║  ██║███████║██████╔╝██████╔╝
+# ██╔══██╗██╔══██║██║  ██║██╔══██║██╔══██╗██╔══██╗
+# ██║  ██║██║  ██║██████╔╝██║  ██║██║  ██║██║  ██║
+# ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
+
+  radarr:
+    image: linuxserver/radarr:6.4.4.10685-ls322
+    container_name: radarr
+    volumes:
+      - ${ARRPATH}/Radarr/config:/config
+      - ${ARRPATH}/Radarr/movies:/data/movies
+      - ${ARRPATH}/Radarr/backup:/data/Backup
+      - ${ARRPATH}/Downloads:/downloads
+      - ./scripts:/custom_scripts 
+    restart: unless-stopped
+    network_mode: "service:gluetun"
+    env_file:
+      - '.env'
+
+# ███████╗██╗      █████╗ ██████╗ ███████╗███████╗ ██████╗ ██╗    ██╗   ██╗ █████╗ ██████╗ ██████╗ 
+# ██╔════╝██║     ██╔══██╗██╔══██╗██╔════╝██╔════╝██╔═══██╗██║    ██║   ██║██╔══██╗██╔══██╗██╔══██╗
+# █████╗  ██║     ███████║██████╔╝█████╗  ███████╗██║   ██║██║    ██║   ██║███████║██████╔╝██████╔╝
+# ██╔══╝  ██║     ██╔══██║██╔══██╗██╔══╝  ╚════██║██║   ██║██║    ╚██╗ ██╔╝██╔══██║██╔══██╗██╔══██╗
+# ██║     ███████╗██║  ██║██║  ██║███████╗███████║╚██████╔╝███████╗╚████╔╝ ██║  ██║██║  ██║██║  ██║
+# ╚═╝     ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚══════╝ ╚═════╝ ╚══════╝ ╚═══╝  ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
+  flaresolverr:
+    # DockerHub mirror flaresolverr/flaresolverr:latest
+    image: 21hsmw/flaresolverr:nodriver
+    #image: ghcr.io/thephaseless/byparr:latest
+    container_name: byparr
+    environment:
+      - LOG_LEVEL=info
+      - LOG_HTML=false
+      - CAPTCHA_SOLVER=none
+      - TZ=Asia/Kolkata
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+      
+# ██╗     ██╗██████╗  █████╗ ██████╗ ██████╗ 
+# ██║     ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██║     ██║██║  ██║███████║██████╔╝██████╔╝
+# ██║     ██║██║  ██║██╔══██║██╔══██╗██╔══██╗
+# ███████╗██║██████╔╝██║  ██║██║  ██║██║  ██║
+# ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+                                             
+  lidarr:
+    image: linuxserver/lidarr:3.1.0.4875-ls43
+    container_name: lidarr
+    volumes:
+      - ${ARRPATH}/Lidarr/config:/config
+      - ${ARRPATH}/Lidarr/music:/data/musicfolder
+      - ${ARRPATH}/Downloads:/downloads
+    network_mode: "service:gluetun"
+    restart: unless-stopped
+    env_file:
+      - '.env'
+
+# ██████╗  █████╗ ███████╗ █████╗ ██████╗ ██████╗ 
+# ██╔══██╗██╔══██╗╚══███╔╝██╔══██╗██╔══██╗██╔══██╗
+# ██████╔╝███████║  ███╔╝ ███████║██████╔╝██████╔╝
+# ██╔══██╗██╔══██║ ███╔╝  ██╔══██║██╔══██╗██╔══██╗
+# ██████╔╝██║  ██║███████╗██║  ██║██║  ██║██║  ██║
+# ╚═════╝ ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:v1.6.2-ls368
+    container_name: bazarr
+    volumes:
+      - ${ARRPATH}/Bazarr/config:/config
+      - ${ARRPATH}/Radarr/movies:/movies
+      - ${ARRPATH}/Sonarr/tvshows:/tvshows
+    restart: unless-stopped 
+    network_mode: "service:gluetun"
+    env_file:
+      - '.env'
+
+
+#  ██████╗ ██████╗ ██╗████████╗████████╗ ██████╗ ██████╗ ██████╗ ███████╗███╗   ██╗████████╗
+# ██╔═══██╗██╔══██╗██║╚══██╔══╝╚══██╔══╝██╔═══██╗██╔══██╗██╔══██╗██╔════╝████╗  ██║╚══██╔══╝
+# ██║   ██║██████╔╝██║   ██║      ██║   ██║   ██║██████╔╝██████╔╝█████╗  ██╔██╗ ██║   ██║   
+# ██║▄▄ ██║██╔══██╗██║   ██║      ██║   ██║   ██║██╔══██╗██╔══██╗██╔══╝  ██║╚██╗██║   ██║   
+# ╚██████╔╝██████╔╝██║   ██║      ██║   ╚██████╔╝██║  ██║██║  ██║███████╗██║ ╚████║   ██║   
+#  ╚══▀▀═╝ ╚═════╝ ╚═╝   ╚═╝      ╚═╝    ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝                                                                                          
+                                                                                             
+  qbittorrent:
+    image: linuxserver/qbittorrent:5.2.4_v2.0.15-ls481
+    container_name: qbittorrent
+    restart: unless-stopped
+    volumes:
+      - ${ARRPATH}/qbittorrent/config:/config
+      - ${ARRPATH}/Downloads:/downloads
+    environment:
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    healthcheck:
+      start_period: 15s
+    network_mode: "service:gluetun"
+    env_file:
+      - '.env'
+
+# ██╗    ██╗██╗  ██╗██╗███████╗██████╗  █████╗ ██████╗ ██████╗ 
+# ██║    ██║██║  ██║██║██╔════╝██╔══██╗██╔══██╗██╔══██╗██╔══██╗
+# ██║ █╗ ██║███████║██║███████╗██████╔╝███████║██████╔╝██████╔╝
+# ██║███╗██║██╔══██║██║╚════██║██╔═══╝ ██╔══██║██╔══██╗██╔══██╗
+# ╚███╔███╔╝██║  ██║██║███████║██║     ██║  ██║██║  ██║██║  ██║
+#  ╚══╝╚══╝ ╚═╝  ╚═╝╚═╝╚══════╝╚═╝     ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
+
+  whisparr_v3:
+    container_name: whisparr_v3
+    image: ghcr.io/hotio/whisparr:v3
+    network_mode: "service:gluetun"
+    volumes:
+      - ${ARRPATH}/whisparr_v3/config:/config
+      - ${ARRPATH}/whisparr_v3/data/clips:/data/clips
+      - ${ARRPATH}/Downloads:/downloads
+      - ./scripts:/custom_scripts 
+    env_file:
+      - '.env'

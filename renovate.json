@@ -21,6 +21,17 @@
       "matchPackageNames": [
         "/^ghcr\\.io/immich-app//"
       ]
+    },
+    {
+      "groupName": "ARR suite",
+      "matchPackageNames": [
+        "/^qmcgaw/gluetun//",
+	"/^linuxserver/prowlarr//",
+	"/^linuxserver/sonarr//",
+	"/^linuxserver/lidarr//",
+	"/^linuxserver/radarr//",
+	"/^linuxserver/qbittorrent//",
+	"/^lscr\\.io/linuxserver/bazarr//"
     }
   ]
 }
