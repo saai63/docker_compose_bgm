@@ -1,6 +1,24 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "$schema": "https://renovatebot.com",
   "extends": [
     "config:recommended"
+  ],
+  "dependencyDashboard": true,
+  "timezone": "Europe/Berlin",
+  "schedule": [
+    "at 6:20pm every day"
+  ],
+  "docker-compose": {
+    "fileMatch": [
+      "(^|/)docker-compose[^/]*\\.ya?ml$"
+    ]
+  },
+  "packageRules": [
+    {
+      "matchPackagePatterns": [
+        "^ghcr\\.io/immich-app/"
+      ],
+      "groupName": "Immich Core Suite"
+    }
   ]
 }
