@@ -3,7 +3,7 @@ name: immich
 services:
   immich-server:
     container_name: immich_server
-    image: ghcr.io/immich-app/immich-server:v3.3.1
+    image: ghcr.io/immich-app/immich-server:v3.3.3
     volumes:
       # Do not edit the next line. If you want to change the media storage location on your system, edit the value of UPLOAD_LOCATION in the .env file
       - ${UPLOAD_LOCATION}:/usr/src/app/upload
@@ -22,7 +22,7 @@ services:
 
   immich-machine-learning:
     container_name: immich_machine_learning
-    image: ghcr.io/immich-app/immich-machine-learning:v3.3.1
+    image: ghcr.io/immich-app/immich-machine-learning:v3.3.3
     volumes:
       - model-cache:/cache
     env_file:
