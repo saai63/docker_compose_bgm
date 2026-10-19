@@ -3,10 +3,12 @@
   "extends": [
     "config:recommended"
   ],
+  "prConcurrentLimit": 0,
+  "prHourlyLimit": 0,
   "dependencyDashboard": true,
   "timezone": "Europe/Berlin",
   "schedule": [
-    "* 19 * * *"
+    "* 20 * * *"
   ],
   "docker-compose": {
     "fileMatch": [
