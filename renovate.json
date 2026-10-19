@@ -32,6 +32,7 @@
 	"/^linuxserver/radarr//",
 	"/^linuxserver/qbittorrent//",
 	"/^lscr\\.io/linuxserver/bazarr//"
+      ]
     }
   ]
 }
