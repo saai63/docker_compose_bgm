@@ -8,7 +8,7 @@
   "dependencyDashboard": true,
   "timezone": "Europe/Berlin",
   "schedule": [
-    "* 20 * * *"
+    "* 21 * * *"
   ],
   "docker-compose": {
     "managerFilePatterns": [
