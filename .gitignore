@@ -7,3 +7,4 @@
 !.gitignore
 !immich/docker-compose.yml
 !renovate.json
+!_renovate.json
