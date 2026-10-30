@@ -48,7 +48,7 @@ services:
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
                               
   prowlarr:
-    image: linuxserver/prowlarr:2.6.5.5623-ls164
+    image: linuxserver/prowlarr:2.7.0.5723-ls166
     container_name: prowlarr
     volumes:
       - ${ARRPATH}/Prowlarr/config:/config
@@ -90,7 +90,7 @@ services:
 # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
 
   radarr:
-    image: linuxserver/radarr:6.4.4.10685-ls322
+    image: linuxserver/radarr:6.4.4.10685-ls324
     container_name: radarr
     volumes:
       - ${ARRPATH}/Radarr/config:/config
@@ -131,7 +131,7 @@ services:
 # ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
                                              
   lidarr:
-    image: linuxserver/lidarr:3.1.0.4875-ls43
+    image: linuxserver/lidarr:3.1.6.5079-ls46
     container_name: lidarr
     volumes:
       - ${ARRPATH}/Lidarr/config:/config
