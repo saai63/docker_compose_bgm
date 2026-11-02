@@ -90,7 +90,7 @@ services:
 # ╚═╝  ╚═╝╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝                                              
 
   radarr:
-    image: linuxserver/radarr:6.4.4.10685-ls324
+    image: linuxserver/radarr:6.4.4.10685-ls325
     container_name: radarr
     volumes:
       - ${ARRPATH}/Radarr/config:/config
