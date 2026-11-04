@@ -131,7 +131,7 @@ services:
 # ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
                                              
   lidarr:
-    image: linuxserver/lidarr:3.1.6.5079-ls46
+    image: linuxserver/lidarr:3.1.6.5079-ls47
     container_name: lidarr
     volumes:
       - ${ARRPATH}/Lidarr/config:/config
