@@ -48,7 +48,7 @@ services:
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
                               
   prowlarr:
-    image: linuxserver/prowlarr:2.7.0.5723-ls166
+    image: linuxserver/prowlarr:2.7.0.5723-ls167
     container_name: prowlarr
     volumes:
       - ${ARRPATH}/Prowlarr/config:/config
