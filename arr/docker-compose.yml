@@ -48,7 +48,7 @@ services:
 # ╚═╝     ╚═╝  ╚═╝ ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═
                               
   prowlarr:
-    image: linuxserver/prowlarr:2.7.0.5723-ls167
+    image: linuxserver/prowlarr:2.7.0.5723-ls168
     container_name: prowlarr
     volumes:
       - ${ARRPATH}/Prowlarr/config:/config
@@ -131,7 +131,7 @@ services:
 # ╚══════╝╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝
                                              
   lidarr:
-    image: linuxserver/lidarr:3.1.6.5079-ls47
+    image: linuxserver/lidarr:3.1.6.5079-ls48
     container_name: lidarr
     volumes:
       - ${ARRPATH}/Lidarr/config:/config
