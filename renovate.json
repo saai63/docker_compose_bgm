@@ -25,7 +25,8 @@
 	    "linuxserver/sonarr",
 	    "linuxserver/lidarr",
 	    "linuxserver/radarr",
-	    "lscr.io/linuxserver/bazarr"
+	    "lscr.io/linuxserver/bazarr",
+	    "lscr.io/linuxserver/sabnzbd"
       ],
 	  "versioning": "regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\.(?<build>\\d+))?-ls(?<revision>\\d+)$"
     },
