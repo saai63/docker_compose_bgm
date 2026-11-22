@@ -198,6 +198,7 @@ services:
       - ${ARRPATH}/Sabnzbd/config:/config
       - ${ARRPATH}/Sabnzbd/Downloads/incomplete:/incomplete-downloads
       - ${ARRPATH}/Sabnzbd/Downloads/complete:/complete-downloads
+      - ${ARRPATH}/Downloads:/downloads
     network_mode: "service:gluetun"
     restart: unless-stopped
     env_file:
